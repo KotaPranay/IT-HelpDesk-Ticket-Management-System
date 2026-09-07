@@ -1,0 +1,373 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin-top: 0;
+        }
+
+        .stat-card p {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Employee Dashboard</h1>
+
+    <p>
+        Welcome {{ request.user.username }}!
+    </p>
+
+    <p>
+        <a href="/create-ticket/">Create New Ticket</a>
+        |
+        <a href="/logout/">Logout</a>
+    </p>
+
+    <hr>
+
+    <h2>My Ticket Statistics</h2>
+
+    <div class="stats-container">
+
+        <div class="stat-card">
+            <h3>Total Tickets</h3>
+            <p>{{ total_tickets }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Open Tickets</h3>
+            <p>{{ open_tickets }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>In Progress</h3>
+            <p>{{ in_progress_tickets }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Closed Tickets</h3>
+            <p>{{ closed_tickets }}</p>
+        </div>
+
+        <hr>
+
+<h2>Priority Statistics</h2>
+
+<div class="stats-container">
+
+    <div class="stat-card">
+        <h3>High Priority</h3>
+        <p>{{ high_priority_tickets }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Medium Priority</h3>
+        <p>{{ medium_priority_tickets }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Low Priority</h3>
+        <p>{{ low_priority_tickets }}</p>
+    </div>
+
+</div>
+
+    </div>
+
+    <hr>
+
+    <h2>My Tickets</h2>
+
+    <p>
+        Showing {{ total_tickets }} Ticket(s)
+    </p>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Created By</th>
+            <th>Assigned Engineer</th>
+            <th>Action</th>
+        </tr>
+
+        {% for ticket in tickets %}
+
+        <tr>
+            <td>{{ ticket.id }}</td>
+
+            <td>
+                <a href="{% url 'ticket_details' ticket.id %}">
+                    {{ ticket.title }}
+                </a>
+            </td>
+
+            <td>{{ ticket.status }}</td>
+
+            <td>{{ ticket.priority }}</td>
+
+            <td>{{ ticket.created_by }}</td>
+
+            <td>{{ ticket.assigned_to | default:"Not Assigned" }}</td>
+
+            <td><a href="{% url 'ticket_details' ticket.id}">View Deteils</a></td>
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="7">
+                No tickets found.
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin-top: 0;
+        }
+
+        .stat-card p {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% if messages %}
+    {% for message in messages %}
+        <p style="color: red; font-weight: bold;">
+            {{ message }}
+        </p>
+    {% endfor %}
+ {% endif %}
+
+<h1>Employee Dashboard</h1>
+
+<p>
+    Welcome {{ request.user.username }}
+</p>
+
+<p>
+    <a href="/create-ticket/">Create New Ticket</a> |
+    <a href="/logout/">Logout</a>
+</p>
+
+<hr>
+
+<!-- TICKET STATISTICS -->
+
+<h2>My Ticket Statistics</h2>
+
+<div class="stats-container">
+
+    <div class="stat-card">
+        <h3>Total Tickets</h3>
+        <p>{{ total_tickets }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Open Tickets</h3>
+        <p>{{ open_tickets }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>In Progress</h3>
+        <p>{{ in_progress_tickets }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Closed Tickets</h3>
+        <p>{{ closed_tickets }}</p>
+    </div>
+
+</div>
+
+<hr>
+
+<!-- PRIORITY STATISTICS -->
+
+<h2>Priority Statistics</h2>
+
+<div class="stats-container">
+
+    <div class="stat-card">
+        <h3>High Priority</h3>
+        <p>{{ high_priority_tickets }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Medium Priority</h3>
+        <p>{{ medium_priority_tickets }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Low Priority</h3>
+        <p>{{ low_priority_tickets }}</p>
+    </div>
+
+</div>
+
+<hr>
+
+<!-- MY TICKETS -->
+
+<h2>My Tickets</h2>
+
+<p>
+    Showing {{ total_tickets }} Ticket(s)
+</p>
+
+<table>
+
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Created By</th>
+        <th>Assigned Engineer</th>
+        <th>Action</th>
+    </tr>
+
+    {% for ticket in tickets %}
+
+    <tr>
+
+        <td>
+            {{ ticket.id }}
+        </td>
+
+        <td>
+            <a href="{% url 'ticket_details' ticket.id %}">
+                {{ ticket.title }}
+            </a>
+        </td>
+
+        <td>
+            {{ ticket.status }}
+        </td>
+
+        <td>
+            {{ ticket.priority }}
+        </td>
+
+        <td>
+            {{ ticket.created_by }}
+        </td>
+
+        <td>
+            {{ ticket.assigned_to|default:"Not Assigned" }}
+        </td>
+
+        <td>
+            <a href="{% url 'ticket_details' ticket.id %}">
+                View Details
+            </a>
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="7">
+            No tickets found.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

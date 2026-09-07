@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assign Ticket</title>
+</head>
+<body>
+
+<h1>Assign Ticket</h1>
+
+<p><strong>Title:</strong> {{ ticket.title }}</p>
+<p><strong>Status:</strong> {{ ticket.status }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Select Engineer:</label>
+
+    <select name="engineer">
+        {% for engineer in engineers %}
+            <option value="{{ engineer.id }}">
+                {{ engineer.username }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <button type="submit">Assign Ticket</button>
+
+</form>
+
+</body>
+</html>

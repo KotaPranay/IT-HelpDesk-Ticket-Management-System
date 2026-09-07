@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket Details</title>
+</head>
+<body>
+
+<h1>Ticket Details</h1>
+
+<hr>
+
+<h2>{{ ticket.title }}</h2>
+
+<p><strong>Description:</strong></p>
+<p>{{ ticket.description }}</p>
+
+<p><strong>Status:</strong> {{ ticket.status }}</p>
+
+<p><strong>Priority:</strong> {{ ticket.priority }}</p>
+
+<p><strong>Created By:</strong> {{ ticket.created_by }}</p>
+
+<hr>
+
+<h2>Comments</h2>
+
+{% if comments %}
+    {% for comment in comments %}
+        <div style="border:1px solid black; padding:10px; margin-bottom:10px;">
+            <strong>{{ comment.user.username }}</strong><br>
+            <small>{{ comment.created_at }}</small>
+
+            <p>{{ comment.comment }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No comments available.</p>
+{% endif %}
+
+<hr>
+
+<h2>Add Comment</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    {{ comment_form.as_p }}
+
+    <button type="submit" name="comment_submit">
+        Add Comment
+    </button>
+</form>
+
+<br>
+
+<hr>
+
+<h2>Attachments</h2>
+
+{% if attachments %}
+    {% for attachment in attachments %}
+        <div>
+            <p>
+                <strong>{{ attachment.file.name }}</strong>
+                <br>
+                Uploaded at: {{ attachment.uploaded_at }}
+                <br>
+
+                <a href="{{ attachment.file.url }}" download>
+                    Download File
+                </a>
+                <form method="POST" action="{% url 'delete_attachment' attachment.id %}">
+                    {% csrf_token %}
+
+                    <button type="submit">
+                        Delete
+                    </button>
+                </form>
+            </p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No attachments available.</p>
+{% endif %}
+
+<hr>
+
+<h2>Upload Attachment</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ attachment_form.as_p }}
+
+    <button type="submit" name="attachment_submit">
+        Upload Attachment
+    </button>
+</form>
+
+<br>
+
+
+
+<a href="/dashboard/">Back to Dashboard</a>
+
+
+</body>
+</html>
