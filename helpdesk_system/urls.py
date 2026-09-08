@@ -23,3 +23,8 @@ def custom_404(request, exception):
     )
 
 handler404 = "helpdesk_system.urls.custom_404"    
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_url, document_root = settings.MEDIA_ROOT
+    )
