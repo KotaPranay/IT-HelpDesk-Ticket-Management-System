@@ -33,7 +33,14 @@ SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 SECURE_HSTS_SECONDS = 0
 
-ALLOWED_HOSTS = ["127.0.0.1","localhost"]
+# ALLOWED_HOSTS = ["127.0.0.1","localhost"]
+
+import os
+
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
+    ALLOWED_HOSTS.append(os.environ["RENDER_EXTERNAL_HOSTNAME"])
 
 
 # Application definition
