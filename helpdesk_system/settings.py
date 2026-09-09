@@ -42,6 +42,10 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
     ALLOWED_HOSTS.append(os.environ["RENDER_EXTERNAL_HOSTNAME"])
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://" + os.environ.get("RENDER_EXTERNAL_HOSTNAME", ""),
+]    
+
 
 # Application definition
 
