@@ -28,6 +28,11 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_HSTS_SECONDS = 0
+
 ALLOWED_HOSTS = ["127.0.0.1","localhost"]
 
 
@@ -78,15 +83,23 @@ WSGI_APPLICATION = 'helpdesk_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#      'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'helpdesk_db',
+#         'USER': 'root',
+#         'PASSWORD': 'mysql@pranay1',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+import dj_database_url
+
 DATABASES = {
-     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'helpdesk_db',
-        'USER': 'root',
-        'PASSWORD': 'mysql@pranay1',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+    "default": dj_database_url.config(
+        default="mysql://root:mysql@pranay1@localhost:3306/helpdesk_db",
+        conn_max_age=600,
+    )
 }
 
 
