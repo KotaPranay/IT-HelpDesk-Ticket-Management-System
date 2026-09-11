@@ -3,9 +3,11 @@ import os
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
+from tickets.models import UserProfile
+
 
 class Command(BaseCommand):
-    help = "Create a deployment admin user if one does not already exist."
+    help = "Create a deployment admin user and profile if they do not exist."
 
     def handle(self, *args, **options):
         User = get_user_model()
@@ -42,3 +44,12 @@ class Command(BaseCommand):
             self.stdout.write(
                 "Deployment admin user already exists; no changes made."
             )
+
+        UserProfile.objects.get_or_create(
+            user=user,
+            defaults={"role": "Admin"},
+        )
+
+        self.stdout.write(
+            self.style.SUCCESS("Admin profile checked/created.")
+        )
