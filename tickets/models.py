@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
 
@@ -128,3 +128,4 @@ class Comment(models.Model):
 
     def _str_(self):
         return f"{self.ticket.title} - {self.user.username}"    
+
