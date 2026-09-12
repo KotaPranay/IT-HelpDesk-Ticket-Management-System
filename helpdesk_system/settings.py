@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -158,8 +159,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/dashboard/"
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / "media"
+
 
 
 # Email Configuration
